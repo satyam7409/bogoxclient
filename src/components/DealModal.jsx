@@ -1,6 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useUser from "../context/UserContext";
 
 const DealModal = ({ onClose }) => {
+  const { isLogin, setIsLogin } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/signin");
+    }
+  }, [isLogin, navigate]);
+
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [city, setCity] = useState("");

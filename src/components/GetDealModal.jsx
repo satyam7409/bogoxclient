@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { MdOutlineMessage } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useUser from "../context/UserContext";
 
 const GetDealModal = ({ onClose }) => {
   const [deals, setDeals] = useState([]);
+  const { isLogin, setIsLogin } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/signin");
+    }
+  }, [isLogin, navigate]);
 
   // Fetch deals
   useEffect(() => {

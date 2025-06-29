@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useUser from "../context/UserContext";
 
 const AllChats = () => {
+  const { isLogin, setIsLogin } = useUser();
   const [conversations, setConversations] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/signin");
+    }
+  }, [isLogin, navigate]);
 
   useEffect(() => {
     const fetchConversations = async () => {

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import cors from "cors";
-
+import useUser from "../context/UserContext";
 const Verifyotp = () => {
+  const { isLogin, setIsLogin } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
@@ -22,6 +22,7 @@ const Verifyotp = () => {
       const data = await response.json();
       if (response.ok) {
         alert("user created");
+        setIsLogin(true);
         navigate("/");
       } else {
         alert(data.message);
