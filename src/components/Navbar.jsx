@@ -1,10 +1,13 @@
-// import { react, useEffect, useState } from "react";
+
+// import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 // import { BsChatLeftText } from "react-icons/bs";
 // import { FaRegUserCircle } from "react-icons/fa";
+// import { GiSunglasses } from "react-icons/gi";
 
 // const Navbar = () => {
 //   const [userLoggin, setUserLoggin] = useState(false);
+
 //   useEffect(() => {
 //     async function handleUser() {
 //       const response = await fetch("http://localhost:8080/islogin", {
@@ -15,7 +18,7 @@
 //         console.log("internal server problem");
 //       }
 //       const data = await response.json();
-//       if (data.message == "Loggedin") {
+//       if (data.message === "Loggedin") {
 //         setUserLoggin(true);
 //       }
 //     }
@@ -23,24 +26,27 @@
 //   }, []);
 
 //   return (
-//     <nav className="bg-blue-600 p-4 shadow-md">
-//       <div className="flex justify-between items-center container mx-auto">
+//     <nav className="bg-white shadow-sm border-b border-gray-200">
+//       <div className="container mx-auto flex justify-between items-center py-4 px-6">
 //         {/* Logo */}
-//         <div className="text-white font-bold text-2xl">BOGO</div>
+//         <Link to="/" className="flex items-center gap-2 text-blue-600 font-extrabold text-2xl">
+//           <GiSunglasses size={28} className="text-blue-500" />
+//           <span>LensDeal</span>
+//         </Link>
 
-//         {/* Right Side Buttons */}
+//         {/* Right Side */}
 //         <div className="flex items-center gap-4">
-//           {/* Chat Icon Button */}
+//           {/* Chat Button */}
 //           <Link to="/all-chats">
-//             <button className="bg-white text-blue-600 p-2 rounded-full hover:bg-gray-100 transition shadow-md">
+//             <button className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition">
 //               <BsChatLeftText size={20} />
 //             </button>
 //           </Link>
 
-//           {/* Sign Up Button */}
+//           {/* Signin Button */}
 //           <Link to="/signin">
-//             <button className="bg-white text-blue-600 py-2 px-6 rounded-md hover:bg-gray-100 transition shadow-md font-semibold">
-//               {userLoggin ? <FaRegUserCircle /> : "Sign up"}
+//             <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition font-medium shadow">
+//               {userLoggin ? <FaRegUserCircle size={20} /> : "Sign In"}
 //             </button>
 //           </Link>
 //         </div>
@@ -53,13 +59,16 @@
 
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsChatLeftText } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import { GiSunglasses } from "react-icons/gi";
+import ProfileModal from "./ProfileModal"; // make sure path is correct
 
 const Navbar = () => {
   const [userLoggin, setUserLoggin] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function handleUser() {
@@ -68,7 +77,7 @@ const Navbar = () => {
         credentials: "include",
       });
       if (!response.ok) {
-        console.log("internal server problem");
+        return;
       }
       const data = await response.json();
       if (data.message === "Loggedin") {
@@ -79,32 +88,46 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 text-blue-600 font-extrabold text-2xl">
-          <GiSunglasses size={28} className="text-blue-500" />
-          <span>LensDeal</span>
-        </Link>
-
-        {/* Right Side */}
-        <div className="flex items-center gap-4">
-          {/* Chat Button */}
-          <Link to="/all-chats">
-            <button className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition">
-              <BsChatLeftText size={20} />
-            </button>
+    <>
+      <nav className="bg-white shadow-sm border-b border-gray-200">
+        <div className="container mx-auto flex justify-between items-center py-4 px-6">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 text-blue-600 font-extrabold text-2xl">
+            <GiSunglasses size={28} className="text-blue-500" />
+            <span>LensDeal</span>
           </Link>
 
-          {/* Signin Button */}
-          <Link to="/signin">
-            <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition font-medium shadow">
-              {userLoggin ? <FaRegUserCircle size={20} /> : "Sign In"}
-            </button>
-          </Link>
+          {/* Right Side */}
+          <div className="flex items-center gap-4">
+            {/* Chat Button */}
+            <Link to="/all-chats">
+              <button className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition">
+                <BsChatLeftText size={20} />
+              </button>
+            </Link>
+
+            {/* Profile or Sign In */}
+            {userLoggin ? (
+              <button
+                onClick={() => setShowProfileModal(true)}
+                className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition"
+              >
+                <FaRegUserCircle size={20} />
+              </button>
+            ) : (
+              <Link to="/signin">
+                <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition font-medium shadow">
+                  Sign In
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Profile Modal */}
+      {showProfileModal && <ProfileModal onClose={() => setShowProfileModal(false)} />}
+    </>
   );
 };
 

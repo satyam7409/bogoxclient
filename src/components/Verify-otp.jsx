@@ -7,6 +7,7 @@ const Verifyotp = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const phone = location.state?.phone || "No phone received";
+  const name = location.state?.name || "No name received";
 
   async function handleVerifyOTP() {
     try {
@@ -17,6 +18,7 @@ const Verifyotp = () => {
         body: JSON.stringify({
           otp: otp,
           phone: phone,
+          name: name, 
         }),
       });
       const data = await response.json();
