@@ -23,7 +23,7 @@ const NewChat = () => {
   useEffect(() => {
     const fetchConversation = async () => {
       try {
-        const response = await fetch("http://localhost:8080/conversations", {
+        const response = await fetch("https://bogoxserver.onrender.com/conversations", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const NewChat = () => {
   useEffect(() => {
     if (!conversationId) return;
 
-    const newSocket = io("http://localhost:8080");
+    const newSocket = io("https://bogoxserver.onrender.com");
     setSocket(newSocket);
 
     newSocket.emit("join room", conversationId);
@@ -76,7 +76,7 @@ const NewChat = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:8080/messages", {
+      const res = await fetch("https://bogoxserver.onrender.com/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

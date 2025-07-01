@@ -11,7 +11,7 @@ const ProfileModal = ({ onClose }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:8080/islogin", {
+        const res = await fetch("https://bogoxserver.onrender.com/islogin", {
           credentials: "include",
         });
         const data = await res.json();
@@ -27,7 +27,7 @@ const ProfileModal = ({ onClose }) => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:8080/logout", {
+      await fetch("https://bogoxserver.onrender.com/logout", {
         method: "POST",
         credentials: "include",
       });

@@ -9,7 +9,7 @@ const YourDealsModal = ({ onClose }) => {
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        const res = await fetch("http://localhost:8080/mydeals", {
+        const res = await fetch("https://bogoxserver.onrender.com/mydeals", {
           credentials: "include",
         });
         const data = await res.json();
@@ -31,7 +31,7 @@ const YourDealsModal = ({ onClose }) => {
     if (!confirm) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/deals/${dealId}`, {
+      const res = await fetch(`https://bogoxserver.onrender.com/deals/${dealId}`, {
         method: "DELETE",
         credentials: "include",
       });

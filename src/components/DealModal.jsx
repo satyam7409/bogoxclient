@@ -76,7 +76,7 @@ const DealModal = ({ onClose }) => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/create_deal", {
+      const response = await fetch("https://bogoxserver.onrender.com/create_deal", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

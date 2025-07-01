@@ -19,7 +19,7 @@ const GetDealModal = ({ onClose }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:8080/deals", {
+        const response = await fetch("https://bogoxserver.onrender.com/deals", {
           method: "GET",
           credentials: "include",
         });

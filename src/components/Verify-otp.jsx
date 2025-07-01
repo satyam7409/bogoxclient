@@ -11,7 +11,7 @@ const Verifyotp = () => {
 
   async function handleVerifyOTP() {
     try {
-      const response = await fetch("http://localhost:8080/verify-otp", {
+      const response = await fetch("https://bogoxserver.onrender.com/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
