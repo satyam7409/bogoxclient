@@ -163,7 +163,7 @@ const SignIn = () => {
       const idToken = await user.getIdToken();
 
       // Send this token to your backend to register/login the user
-      const response = await fetch("http://localhost:8080/firebase-login", {
+      const response = await fetch("https://bogoxserver.onrender.com/firebase-login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
