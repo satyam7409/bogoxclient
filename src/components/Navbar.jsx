@@ -1,39 +1,25 @@
-
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsChatLeftText } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import { GiSunglasses } from "react-icons/gi";
 import ProfileModal from "./ProfileModal"; // make sure path is correct
+import useUser from "../context/UserContext";
 
 const Navbar = () => {
-  const [userLoggin, setUserLoggin] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function handleUser() {
-      const response = await fetch("https://bogoxserver.onrender.com/islogin", {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok) {
-        return;
-      }
-      const data = await response.json();
-      if (data.message === "Loggedin") {
-        setUserLoggin(true);
-      }
-    }
-    handleUser();
-  }, []);
-
+  const { isLogin, setIsLogin } = useUser();
+  
   return (
     <>
       <nav className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto flex justify-between items-center py-4 px-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-blue-600 font-extrabold text-2xl">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-blue-600 font-extrabold text-2xl"
+          >
             <GiSunglasses size={28} className="text-blue-500" />
             <span>LensDeal</span>
           </Link>
@@ -48,7 +34,7 @@ const Navbar = () => {
             </Link>
 
             {/* Profile or Sign In */}
-            {userLoggin ? (
+            {isLogin ? (
               <button
                 onClick={() => setShowProfileModal(true)}
                 className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition"
@@ -67,7 +53,9 @@ const Navbar = () => {
       </nav>
 
       {/* Profile Modal */}
-      {showProfileModal && <ProfileModal onClose={() => setShowProfileModal(false)} />}
+      {showProfileModal && (
+        <ProfileModal onClose={() => setShowProfileModal(false)} />
+      )}
     </>
   );
 };
